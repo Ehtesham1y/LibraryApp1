@@ -71,27 +71,20 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Code,BookName,Author,IsAvailable,Price,ShelfId,PublishYear,CreatedOn,IsDeleted")] Book book)
         {
-            //var parameter = new List<SqlParameter>();
-            //parameter.Add(new SqlParameter("@ProductName", book.Code));
-            //parameter.Add(new SqlParameter("@ProductDescription", book.BookName));
-            //parameter.Add(new SqlParameter("@ProductPrice", book.Author));
-            //parameter.Add(new SqlParameter("@ProductStock", book.IsAvailable));
-            //parameter.Add(new SqlParameter("@ProductDescription", book.Price));
-            //parameter.Add(new SqlParameter("@ProductPrice", book.ShelfId));
-            //parameter.Add(new SqlParameter("@ProductStock", book.PublishYear));
-            //parameter.Add(new SqlParameter("@ProductPrice", book.CreatedOn));
-            //parameter.Add(new SqlParameter("@ProductStock", book.IsDeleted));
-            //    var result =
-            //      _context.Database.ExecuteSqlRawAsync(@"EXECUTE InsertBook @Code, @BookName, @Author, @IsAvailable, @Price, @ShelfId, ,@PublishYear , @CreatedOn, @IsDeleted", parameter.ToArray());
-
-            //return RedirectToAction(nameof(Index));
-           
-                _context.Add(book);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
             
-            ViewData["ShelfId"] = new SelectList(_context.Shelves, "ShelfId", "ShelfId", book.ShelfId);
-            return View(book);
+
+            _context.Database.ExecuteSqlInterpolated($"EXEC InsertBook @Code={book.Code}, @BookName={book.BookName},@Author={book.Author},@IsAvailable={book.IsAvailable},@Price={book.Price},@ShelfId={book.ShelfId},@PublishYear={book.PublishYear},@CreatedOn={book.CreatedOn},@IsDeleted={book.IsDeleted}");
+            return RedirectToAction(nameof(Index));
+
+
+            //_context.Add(book);
+            //    await _context.SaveChangesAsync();
+            //    return RedirectToAction(nameof(Index));
+
+
+            //ViewData["ShelfId"] = new SelectList(_context.Shelves, "ShelfId", "ShelfId", book.ShelfId);
+            //return View(book);
+            //return View(book);
         }
 
         // GET: Books/Edit/5

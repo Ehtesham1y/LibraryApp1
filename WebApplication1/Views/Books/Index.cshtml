@@ -1,7 +1,10 @@
 ﻿@model IEnumerable<WebApplication1.Models.Book>
 
 @{
-   
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
     ViewData["Title"] = "Index";
 
 }
@@ -16,7 +19,7 @@
 <form method="get">
     <div class="form-group">
         <label for="searchQuery">Search By Book Name:</label>
-        <div sty>
+        <div style="display:-webkit-box">
         <input type="text" class="form-control" style="width: 50%" name="searchQuery" id="searchQuery" value="" />
         <button type="submit" class="btn btn-primary">Search</button>
         </div>
@@ -95,6 +98,8 @@
 }
     </tbody>
 </table>
+
+
 
 
 

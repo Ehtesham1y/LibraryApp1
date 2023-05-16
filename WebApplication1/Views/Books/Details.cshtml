@@ -1,14 +1,16 @@
 ﻿@model WebApplication1.Models.Book
 
 @{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     ViewData["Title"] = "Details";
 }
 
 <h1>Details</h1>
 
-<div>
+<div id="s">
     <h4>Book</h4>
     <hr />
+    <div id="divToExport">
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Code)
@@ -66,7 +68,28 @@
         </dd>
     </dl>
 </div>
+</div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+
+<button id="exportButton">Export to PDF</button>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#exportButton').click(function () {
+            // Create a new jsPDF instance
+            var doc = new jsPDF();
+
+            // Get the HTML content of the div you want to export
+            var content = $('#divToExport').html();
+
+            // Add the HTML content to the PDF
+            doc.fromHTML(content, 15, 15);
+
+            // Save the PDF file
+            doc.save('exported.pdf');
+        });
+    });
+</script>
